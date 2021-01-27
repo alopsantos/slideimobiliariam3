@@ -8,36 +8,36 @@ import api from '../../services/api';
 import { Slideshow, SlideshowItem, SlideshowItemText } from './styles';
 
 interface ISlideimoveis {
+  id: number;
   code: number | string;
   title: string;
-  description: string;
-  details: IDetails;
-  image: string;
-}
-interface IDetails {
+  //description: string;
   dormitorios: string;
   banheiros: string;
   garagem: string;
   sala: string;
   cozinha: string;
   suite: string;
+  image: string;
 }
 const Dashboard: React.FC = () => {
   const [Slides, setSlides] = useState<ISlideimoveis[]>([]);
 
   useEffect(() => {
+    console.log("teste");
     loadApi();
   }, []);
-
+  
   async function loadApi() {
-    const response = await api.get('/imoveis');
+    const response = await api.get('imoveis');
     setSlides(response.data);
   }
-
+  
   return (
     <Slideshow>
+      <div>teste</div>
       {Slides.map((slide, i = Slides.length - 1) => (
-        <SlideshowItem style={{ animationDelay: `${i * 10}s` }}>
+        <SlideshowItem key={slide.id} style={{ animationDelay: `${i * 10}s` }}>
           <img
             src={slide.image}
             alt={slide.title}
@@ -47,47 +47,47 @@ const Dashboard: React.FC = () => {
           <SlideshowItemText style={{ animationDelay: `${i * 10}s` }}>
             <h5 style={{ animationDelay: `${i * 10}s` }}>Cod: {slide.code}</h5>
 
-            <p style={{ animationDelay: `${i * 10}s` }}>{slide.description}</p>
+            {/* <p style={{ animationDelay: `${i * 10}s` }}>{slide.description}</p> */}
 
             <p style={{ animationDelay: `${i * 10}s` }}>
               <ul>
-                {slide.details.suite && (
+                {slide.suite && (
                   <li>
                     <BiBath size="32" />
-                    {slide.details.suite}
+                    {slide.suite}
                   </li>
                 )}
-                {slide.details.dormitorios && (
+                {slide.dormitorios && (
                   <li>
                     <BiBed size="32" />
-                    {slide.details.dormitorios}
+                    {slide.dormitorios}
                   </li>
                 )}
 
-                {slide.details.banheiros && (
+                {slide.banheiros && (
                   <li>
                     <FaRestroom size="32" />
-                    {slide.details.banheiros}
+                    {slide.banheiros}
                   </li>
                 )}
 
-                {slide.details.sala && (
+                {slide.sala && (
                   <li>
                     <RiSlideshow3Line size="32" />
-                    {slide.details.sala}
+                    {slide.sala}
                   </li>
                 )}
 
-                {slide.details.cozinha && (
+                {slide.cozinha && (
                   <li>
                     <BiRestaurant size="32" />
-                    {slide.details.cozinha}
+                    {slide.cozinha}
                   </li>
                 )}
-                {slide.details.garagem && (
+                {slide.garagem && (
                   <li>
                     <BiCar size="32" />
-                    {slide.details.garagem}
+                    {slide.garagem}
                   </li>
                 )}
               </ul>
